@@ -1,0 +1,59 @@
+{{- $dot := . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "siftest.fullname" . }}
+  labels:
+    {{- include "siftest.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "siftest.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "siftest.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+      - name: git-cloner
+        image: alpine/git
+        args:
+            - clone
+            - --branch
+            - {{ .Values.branch }}
+            - --
+            - {{ .Values.gitrepo }}
+            - {{ .Values.mount }}
+        volumeMounts:
+        - mountPath: /temp
+          name: sifnode
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "siftest.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /sifnode
+          name: sifnode
+      {{- range .Values.containers }}
+      - {{ . | toYaml | nindent 8 | trim }}
+        {{- $dot.Values.containercommon | toYaml | nindent 8 }}
+        volumeMounts:
+        {{- $dot.Values.volumeMounts | toYaml | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- .Values.volumes | toYaml | nindent 8 }}
