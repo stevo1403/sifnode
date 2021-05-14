@@ -58,7 +58,7 @@ We want to optimize for:
 
 ### CLEAN ARCHITECTURE
 
-We support a simplified version of clean arhitecture to help us achieve our goals.
+We support a simplified version of clean architecture to help us achieve our goals.
 
 - View - Present the UI
 - Usecase - Encapsulated Application Specific Logic
