@@ -102,8 +102,6 @@ containers:
   - containerPort: 26657
 - name: testrunner
   args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py testrunner"]
-- name: smartcontractrunner
-  args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py smartcontractrunner"]
 
 containercommon:
   image: ghcr.io/sifchain/sifnode/sifdocker:latest
