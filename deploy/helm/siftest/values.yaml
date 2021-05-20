@@ -90,20 +90,20 @@ service:
 
 containers:
 - name: geth
-  args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py geth"]
+  args: ["bash", "-c", "PATH=${PATH}:/gobin pip install -r src/py/requirements.txt && python3 -u src/py/env_framework.py geth"]
   ports:
   - containerPort: 8646
   - containerPort: 7990
 - name: ebrelayer1
-  args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py ebrelayer1"]
+  args: ["bash", "-c", "PATH=${PATH}:/gobin pip install -r src/py/requirements.txt && python3 -u src/py/env_framework.py ebrelayer1"]
 - name: sifnoded
-  args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py startsifnoded"]
+  args: ["bash", "-c", "PATH=${PATH}:/gobin pip install -r src/py/requirements.txt && python3 -u src/py/env_framework.py startsifnoded"]
   ports:
   - containerPort: 26657
 - name: smartcontractrunner
-  args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py smartcontractrunner"]
+  args: ["bash", "-c", "PATH=${PATH}:/gobin pip install -r src/py/requirements.txt && python3 -u src/py/env_framework.py smartcontractrunner"]
 - name: testrunner
-  args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py testrunner"]
+  args: ["bash", "-c", "PATH=${PATH}:/gobin pip install -r src/py/requirements.txt && python3 -u src/py/env_framework.py testrunner"]
 
 containercommon:
   image: ghcr.io/sifchain/sifnode/sifdocker:latest
