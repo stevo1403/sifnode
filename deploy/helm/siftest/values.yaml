@@ -100,6 +100,8 @@ containers:
   args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py startsifnoded"]
   ports:
   - containerPort: 26657
+- name: smartcontractrunner
+  args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py smartcontractrunner"]
 - name: testrunner
   args: ["bash", "-c", "PATH=${PATH}:/gobin python3 -u src/py/env_framework.py testrunner"]
 
