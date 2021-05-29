@@ -121,8 +121,7 @@ namespace :cluster do
       end
 
       desc "Deploy a single standalone sifnode on to your cluster"
-      task :standalone_vault, [:namespace, :image, :image_tag, :template_file_name, :final_file_name] do |t, args|
-        variable_template_replace(args[:template_file_name], args[:final_file_name])
+      task :standalone_vault, [:namespace, :image, :image_tag] do |t, args|
         cmd = %Q{helm upgrade sifnode deploy/helm/sifnode-vault \
           --install -n #{args[:namespace]} --create-namespace \
           --set image.tag=#{args[:image_tag]} \
@@ -690,8 +689,8 @@ metadata:
   desc "Check Vault Secret Exists"
   namespace :vault do
     desc "Check Vault Secret Exists"
-    task :check_application_configured, [:app_env, :region, :app_name] do |t, args|
-      vault_secret_check = `kubectl exec --kubeconfig=./kubeconfig -n vault -it vault-0 -- vault kv get kv-v2/#{args[:region]}/#{args[:app_env]}/#{args[:app_name]}`
+    task :check_application_configured, [:app_env, :region, :app_name, :app_namespace] do |t, args|
+      vault_secret_check = `kubectl exec --kubeconfig=./kubeconfig -n vault -it vault-0 -- vault kv get kv-v2/#{args[:region]}/#{args[:app_env]}/#{args[:app_namespace]}/#{args[:app_name]}`
       if vault_secret_check.include?("#No value found")
         puts "Application Not Configured Please Run https://github.com/Sifchain/chainOps/actions/workflows/setup_new_application_in_vault.yaml"
         exit 1
