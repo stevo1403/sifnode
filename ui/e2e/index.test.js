@@ -26,7 +26,7 @@ const { importKeplrAccount, connectKeplrAccount } = require("./keplr");
 // services
 const { getSifchainBalances } = require("./sifchain.js");
 const { getEthBalance, advanceEthBlocks } = require("./ethereum.js");
-const { extractFile, getExtensionPage } = require("./utils");
+const { extractFile, getExtensionPage, recordVideo } = require("./utils");
 const { useStack } = require("../test/stack");
 
 async function getInputValue(page, selector) {
@@ -105,6 +105,7 @@ beforeEach(async () => {
 });
 
 it("pegs rowan", async () => {
+  await recordVideo(dexPage, "pegs rowan");
   // First we need to unpeg rowan in order to have erowan on the bridgebank contract
   // Navigate to peg page
   await dexPage.goto(DEX_TARGET, {
@@ -193,6 +194,7 @@ it("pegs rowan", async () => {
 });
 
 it("pegs ether", async () => {
+  await recordVideo(dexPage, "pegs ether");
   // Navigate to peg page
   await dexPage.goto(DEX_TARGET, {
     waitUntil: "domcontentloaded",
@@ -242,6 +244,7 @@ it("pegs ether", async () => {
 });
 
 it("pegs tokens", async () => {
+  await recordVideo(dexPage, "pegs tokens");
   // Navigate to peg page
   await dexPage.goto(DEX_TARGET, {
     waitUntil: "domcontentloaded",
@@ -293,6 +296,7 @@ it("pegs tokens", async () => {
 });
 
 it("swaps", async () => {
+  await recordVideo(dexPage, "swaps");
   // Navigate to swap page
   await dexPage.goto(DEX_TARGET, {
     waitUntil: "domcontentloaded",
@@ -439,6 +443,7 @@ it("swaps", async () => {
 });
 
 it("fails to swap when it can't pay gas with rowan", async () => {
+  await recordVideo(dexPage, "fails to swap");
   // Navigate to swap page
   await dexPage.goto(DEX_TARGET, {
     waitUntil: "domcontentloaded",
@@ -487,6 +492,7 @@ it("fails to swap when it can't pay gas with rowan", async () => {
 });
 
 it("adds liquidity", async () => {
+  await recordVideo(dexPage, "adds liquidity");
   // Navigate to swap page
   await dexPage.goto(DEX_TARGET, {
     waitUntil: "domcontentloaded",
@@ -637,6 +643,7 @@ it("adds liquidity", async () => {
 });
 
 it("fails to add liquidity when can't pay gas with rowan", async () => {
+  await recordVideo(dexPage, "fails to add liquidity");
   // Navigate to swap page
   await dexPage.goto(DEX_TARGET, {
     waitUntil: "domcontentloaded",
@@ -674,6 +681,7 @@ it("fails to add liquidity when can't pay gas with rowan", async () => {
 });
 
 it("formats long amounts in confirmation screen", async () => {
+  await recordVideo(dexPage, "formats long amount");
   // Navigate to swap page
   await dexPage.goto(DEX_TARGET, {
     waitUntil: "domcontentloaded",
