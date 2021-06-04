@@ -171,14 +171,13 @@ namespace :cluster do
       end
 
       desc "Deploy a single network-aware sifnode on to your cluster"
-      task :peer, [:chainnet, :namespace, :image, :image_tag, :moniker, :mnemonic, :peer_address, :genesis_url] do |t, args|
+      task :peer, [:chainnet, :namespace, :image, :image_tag, :moniker, :mnemonic, :peer_address] do |t, args|
         cmd = %Q{helm upgrade sifnode #{cwd}/../../deploy/helm/sifnode \
           --install -n #{args[:namespace]} --create-namespace \
           --set sifnode.env.chainnet=#{args[:chainnet]} \
           --set sifnode.env.moniker=#{args[:moniker]} \
           --set sifnode.args.mnemonic=#{args[:mnemonic]} \
           --set sifnode.args.peerAddress=#{args[:peer_address]} \
-          --set sifnode.args.genesisURL=#{args[:genesis_url]} \
           --set image.tag=#{args[:image_tag]} \
           --set image.repository=#{args[:image]} --kubeconfig=./kubeconfig
         }
