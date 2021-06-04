@@ -154,7 +154,7 @@ namespace :cluster do
   namespace :sifnode_vault do
     
       desc "Deploy a single standalone sifnode on to your cluster"
-      task :standalone, [:chainnet, :provider, :namespace, :image, :image_tag, :moniker, :mnemonic, :admin_clp_addresses, :admin_oracle_address, :minimum_gas_prices] do |t, args|
+      task :standalone, [:chainnet, :namespace, :image, :image_tag, :moniker, :mnemonic, :admin_clp_addresses, :admin_oracle_address, :minimum_gas_prices] do |t, args|
         cmd = %Q{helm upgrade sifnode #{cwd}/../../deploy/helm/sifnode \
           --set sifnode.env.chainnet=#{args[:chainnet]} \
           --set sifnode.env.moniker=#{args[:moniker]} \
@@ -171,7 +171,7 @@ namespace :cluster do
       end
 
       desc "Deploy a single network-aware sifnode on to your cluster"
-      task :peer, [:chainnet, :provider, :namespace, :image, :image_tag, :moniker, :mnemonic, :peer_address, :genesis_url] do |t, args|
+      task :peer, [:chainnet, :namespace, :image, :image_tag, :moniker, :mnemonic, :peer_address, :genesis_url] do |t, args|
         cmd = %Q{helm upgrade sifnode #{cwd}/../../deploy/helm/sifnode \
           --install -n #{args[:namespace]} --create-namespace \
           --set sifnode.env.chainnet=#{args[:chainnet]} \
