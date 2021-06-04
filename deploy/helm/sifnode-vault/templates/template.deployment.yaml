@@ -38,7 +38,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/bin/sh"]
           {{- if .Values.sifnode.args.peerAddress }}
-          args: ["-c", 'while [ ! -f /vault/secrets/sifnode ]; do sleep 1; done && source /vault/secrets/sifnode && -=hotfix_command=- && sifgen node create $CHAINNET $MONIKER "${mnemonic}" --bind-ip-address $EXTERNAL_IP --peer-address {{ .Values.sifnode.args.peerAddress }} --genesis-url ${genesisURL} --with-cosmovisor']
+          args: ["-c", 'while [ ! -f /vault/secrets/sifnode ]; do sleep 1; done && source /vault/secrets/sifnode && sifgen node create $CHAINNET $MONIKER "${mnemonic}" --bind-ip-address $EXTERNAL_IP --peer-address {{ .Values.sifnode.args.peerAddress }} --genesis-url ${genesisURL} --with-cosmovisor']
           {{- else }}
           args: ["-c", 'while [ ! -f /vault/secrets/sifnode ]; do sleep 1; done && source /vault/secrets/sifnode && sifgen node create $CHAINNET $MONIKER "${mnemonic}" --mint-amount ${mintAmount} --bond-amount ${bondAmount} --admin-clp-addresses "${adminCLPAddresses}" --admin-oracle-address ${adminOracleAddress} --bind-ip-address $EXTERNAL_IP --gov-max-deposit-period ${govMaxDepositPeriod} --gov-voting-period ${govVotingPeriod} --standalone --with-cosmovisor']
           {{- end }}
@@ -58,7 +58,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/bin/sh"]
-          args: ["-c", "source /vault/secrets/sifnode && cosmovisor start --rpc.laddr tcp://0.0.0.0:26657 --minimum-gas-prices \"${minimumGasPrices}\""]
+          args: ["-c", "source /vault/secrets/sifnode && -=hotfix_command=- && cosmovisor start --rpc.laddr tcp://0.0.0.0:26657 --minimum-gas-prices \"${minimumGasPrices}\""]
           volumeMounts:
             - name: data
               mountPath: /root/
