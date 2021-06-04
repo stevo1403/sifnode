@@ -152,6 +152,41 @@ namespace :cluster do
   end
 
   namespace :sifnode_vault do
+    
+      desc "Deploy a single standalone sifnode on to your cluster"
+      task :standalone, [:chainnet, :provider, :namespace, :image, :image_tag, :moniker, :mnemonic, :admin_clp_addresses, :admin_oracle_address, :minimum_gas_prices] do |t, args|
+        cmd = %Q{helm upgrade sifnode #{cwd}/../../deploy/helm/sifnode \
+          --set sifnode.env.chainnet=#{args[:chainnet]} \
+          --set sifnode.env.moniker=#{args[:moniker]} \
+          --set sifnode.args.mnemonic=#{args[:mnemonic]} \
+          --set sifnode.args.adminCLPAddresses=#{args[:admin_clp_addresses]} \
+          --set sifnode.args.adminOracleAddress=#{args[:admin_oracle_address]} \
+          --set sifnode.args.minimumGasPrices=#{args[:minimum_gas_prices]} \
+          --install -n #{args[:namespace]} --create-namespace \
+          --set image.tag=#{args[:image_tag]} \
+          --set image.repository=#{args[:image]} --kubeconfig=./kubeconfig
+        }
+
+        system(cmd)
+      end
+
+      desc "Deploy a single network-aware sifnode on to your cluster"
+      task :peer, [:chainnet, :provider, :namespace, :image, :image_tag, :moniker, :mnemonic, :peer_address, :genesis_url] do |t, args|
+        cmd = %Q{helm upgrade sifnode #{cwd}/../../deploy/helm/sifnode \
+          --install -n #{args[:namespace]} --create-namespace \
+          --set sifnode.env.chainnet=#{args[:chainnet]} \
+          --set sifnode.env.moniker=#{args[:moniker]} \
+          --set sifnode.args.mnemonic=#{args[:mnemonic]} \
+          --set sifnode.args.peerAddress=#{args[:peer_address]} \
+          --set sifnode.args.genesisURL=#{args[:genesis_url]} \
+          --set image.tag=#{args[:image_tag]} \
+          --set image.repository=#{args[:image]} --kubeconfig=./kubeconfig
+        }
+
+        system(cmd)
+      end
+    
+    
     desc "Deploy a new sifnode vault to a new cluster"
     task :standalone, [:namespace, :image, :image_tag, :helm_values_file] do |t, args|
         cmd = %Q{helm upgrade sifnode deploy/helm/sifnode-vault \
