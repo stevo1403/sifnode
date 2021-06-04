@@ -16,42 +16,28 @@ podSecurityContext: {}
 securityContext: {}
 
 image:
-  repository: sifchain/ebrelayer
+  repository: sifchain/cryptoeconomics
   pullPolicy: Always
   tag: "testnet"
 
-ebrelayer:
-  args:
-    nodeHost: ""
-    ethWebsocketAddress: ""
-    ethBridgeRegistryAddress: ""
-    mnemonic: ""
-    gas: "5000000000000"
-    gasPrices: "0.5rowan"
-  env:
-    chainnet: ""
-    moniker: ""
-    ethPrivateKey: ""
-
-persistence:
-  enabled: true
-  size: 25Gi
-  accessMode: ReadWriteOnce
+service:
+  type: LoadBalancer
+  port: 80
 
 ingress:
   enabled: false
   annotations: {}
   hosts:
-    - host: ebrelayer.local
+    - host: cryptoeconomics.local
       paths: []
   tls: []
 
 resources:
   requests:
-    cpu: 0.5
-    memory: 4Gi
+    cpu: 1
+    memory: 8Gi
   limits:
-    memory: 4Gi
+    memory: 16Gi
 
 autoscaling:
   enabled: false

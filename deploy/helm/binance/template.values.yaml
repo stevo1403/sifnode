@@ -5,33 +5,21 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  create: true
+  #create: true
   annotations: {}
-  name: ""
-
-podAnnotations: {}
+  name: "-=app_name=-"
 
 podSecurityContext: {}
-
 securityContext: {}
 
 image:
-  repository: sifchain/ebrelayer
+  repository: sifchain/binance
   pullPolicy: Always
   tag: "testnet"
 
-ebrelayer:
-  args:
-    nodeHost: ""
-    ethWebsocketAddress: ""
-    ethBridgeRegistryAddress: ""
-    mnemonic: ""
-    gas: "5000000000000"
-    gasPrices: "0.5rowan"
+-=app_name=-:
   env:
-    chainnet: ""
-    moniker: ""
-    ethPrivateKey: ""
+    updateforce: "force_update_change_this"
 
 persistence:
   enabled: true
@@ -42,7 +30,7 @@ ingress:
   enabled: false
   annotations: {}
   hosts:
-    - host: ebrelayer.local
+    - host: -=app_name=-.local
       paths: []
   tls: []
 
@@ -52,12 +40,6 @@ resources:
     memory: 4Gi
   limits:
     memory: 4Gi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
 
 strategyType: Recreate
 

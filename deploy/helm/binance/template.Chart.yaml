@@ -1,6 +1,6 @@
 apiVersion: v2
-name: ebrelayer
-description: Sifchain ETH Relayer
+name: -=app_name=-
+description: Sifchain Binance Fullnode
 type: application
 version: 0.1.0
 appVersion: 1.16.0
