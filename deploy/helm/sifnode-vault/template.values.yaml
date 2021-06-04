@@ -39,8 +39,8 @@ podAnnotations:
       export govVotingPeriod="{{ .Data.data.govVotingPeriod }}"
       export DAEMON_HOME="/root/.sifnoded"
       export DAEMON_NAME="sifnoded"
-      export DAEMON_ALLOW_DOWNLOAD_BINARIES=true
-      export DAEMON_RESTART_AFTER_UPGRADE=true
+      export DAEMON_ALLOW_DOWNLOAD_BINARIES=-=DAEMON_ALLOW_DOWNLOAD_BINARIES=-
+      export DAEMON_RESTART_AFTER_UPGRADE=-=DAEMON_RESTART_AFTER_UPGRADE=-
       export CHAINNET="{{ .Data.data.CHAINNET }}"
       export MONIKER="{{ .Data.data.MONIKER }}"
     {{- end }}
