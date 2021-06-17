@@ -24,6 +24,8 @@ func (k Keeper) ExistsOracleWhiteList(ctx sdk.Context) bool {
 
 //
 func (k Keeper) GetOracleWhiteList(ctx sdk.Context) []sdk.ValAddress {
+	logger := k.Logger(ctx)
+
 	store := ctx.KVStore(k.storeKey)
 	key := types.WhiteListValidatorPrefix
 	bz := store.Get(key)
@@ -32,6 +34,7 @@ func (k Keeper) GetOracleWhiteList(ctx sdk.Context) []sdk.ValAddress {
 
 	vl := make([]sdk.ValAddress, len(valAddresses.Addresses))
 	for i, entry := range valAddresses.Addresses {
+		logger.Info("GetOracleWhiteList", "validator is:", entry)
 		addr, err := sdk.ValAddressFromBech32(entry)
 		if err != nil {
 			panic(err)

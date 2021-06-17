@@ -32,14 +32,14 @@ func TestMigrateGenesisDataCmd(t *testing.T) {
 	cmd, _ = NewRootCmd()
 	cmd.SetArgs([]string{"init", "test", "--home=" + homeDir})
 	err = svrcmd.Execute(cmd, homeDir)
-	require.NoError(t,err)
+	require.NoError(t, err)
 
 	cmd, _ = NewRootCmd()
 	cmd.SetArgs([]string{"unsafe-reset-all"})
 	err = svrcmd.Execute(cmd, homeDir)
 	require.NoError(t, err)
 
-	ioutil.WriteFile(homeDir + "/config/genesis.json", migrateOutputBuf.Bytes(), fs.ModeExclusive)
+	_ = ioutil.WriteFile(homeDir+"/config/genesis.json", migrateOutputBuf.Bytes(), fs.ModeExclusive)
 
 	cmd, _ = NewRootCmd()
 	cmd.SetArgs([]string{"validate-genesis"})
