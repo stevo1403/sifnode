@@ -22,7 +22,7 @@ const deployBridgeBank: DeployFunction = async function (hre: HardhatRuntimeEnvi
         owner,
         pauser
     ];
-    await hre.deployments.deploy(ContractNames.BridgeBank, {
+    return await hre.deployments.deploy(ContractNames.BridgeBank, {
         from: operator,
         args: bridgeBankArgs,
         proxy: true
