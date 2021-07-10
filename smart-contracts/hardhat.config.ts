@@ -1,8 +1,8 @@
 import {task} from "hardhat/config";
 import '@openzeppelin/hardhat-upgrades'
 import "@nomiclabs/hardhat-ethers"
-import "hardhat-deploy"
 import "@typechain/hardhat"
+import "reflect-metadata";
 
 // require('hardhat-local-networks-config-plugin')
 // require("hardhat-typechain");
